@@ -1,0 +1,63 @@
+<view class="page home-page">
+  <view class="hero soft-card">
+    <view class="brand">人格小测</view>
+    <view class="halo"></view>
+    <view class="hero-title">遇见更真实的自己</view>
+    <view class="hero-subtitle">一个温柔的人格、状态与兴趣探索工具</view>
+    <button class="primary-btn start-btn" bindtap="startQuiz">开始推荐测试</button>
+    <button wx:if="{{lastResult}}" class="secondary-btn last-btn" bindtap="viewLastResult">
+      查看上次结果
+    </button>
+    <button wx:if="{{historyCount > 0}}" class="secondary-btn last-btn" bindtap="goHistory">
+      历史记录 {{historyCount}} 条
+    </button>
+  </view>
+
+  <view wx:if="{{lastResult}}" class="last-result soft-card" bindtap="viewLastResult">
+    <view class="last-label">上次结果</view>
+    <view class="last-main">
+      <view class="last-content safe-text">
+        <view class="last-test">{{lastTestTitle}}</view>
+        <view class="last-type">{{lastResultTitle}}</view>
+        <view class="last-summary">{{lastResultSummary}}</view>
+      </view>
+      <view class="last-status">{{lastResultStatus}}</view>
+    </view>
+  </view>
+
+  <view class="test-section">
+    <view class="section-head">
+      <view>
+        <view class="section-title">测试中心</view>
+        <view class="section-subtitle">选择一个测试，慢慢认识自己。</view>
+      </view>
+    </view>
+
+    <view class="test-list">
+      <view
+        class="test-card soft-card test-{{item.color}} {{item.status === 'coming' ? 'test-disabled' : ''}}"
+        wx:for="{{tests}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="openTest"
+      >
+        <view class="test-top">
+          <view class="test-tag">{{item.tag}}</view>
+          <view class="test-status">{{item.status === 'available' ? '可开始' : '敬请期待'}}</view>
+        </view>
+        <view class="test-title">{{item.title}}</view>
+        <view class="test-subtitle">{{item.subtitle}}</view>
+        <view class="test-meta">
+          <view>{{item.questionCount}} 道题</view>
+          <view>{{item.duration}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="note">
+    <view class="note-title">开始前的小提醒</view>
+    <view class="note-text">请按照更自然、更常见的自己作答。结果仅供自我了解和娱乐参考，不构成心理诊断。</view>
+    <button class="ghost-btn about-link" bindtap="goAbout">关于测试与隐私说明</button>
+  </view>
+</view>

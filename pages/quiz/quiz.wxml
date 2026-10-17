@@ -1,0 +1,42 @@
+<view class="page quiz-page">
+  <view class="progress-wrap">
+    <view class="progress-text">{{currentIndex + 1}} / {{total}}</view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progress}}%;"></view>
+    </view>
+  </view>
+
+  <view class="question-card soft-card">
+    <view class="question-id">第 {{currentIndex + 1}} 题</view>
+    <scroll-view class="question-body safe-text" scroll-y>
+      <block wx:if="{{questionType === 'choicePair'}}">
+        <view class="statement statement-left">A. {{question.leftText}}</view>
+        <view class="divider">或</view>
+        <view class="statement statement-right">B. {{question.rightText}}</view>
+      </block>
+      <block wx:else>
+        <view class="scale-prompt">{{scalePrompt}}</view>
+        <view class="statement scale-statement">{{question.text}}</view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <view class="options">
+    <button
+      wx:for="{{options}}"
+      wx:key="value"
+      class="option {{selected === item.value ? 'option-active' : ''}}"
+      data-value="{{item.value}}"
+      bindtap="selectOption"
+    >
+      {{item.label}}
+    </button>
+  </view>
+
+  <view class="actions safe-actions">
+    <button class="secondary-btn nav-btn" bindtap="prevQuestion" disabled="{{currentIndex === 0}}">上一题</button>
+    <button class="primary-btn nav-btn" bindtap="nextQuestion">{{isLast ? '查看结果' : '下一题'}}</button>
+  </view>
+
+  <button class="ghost-btn reset-btn" bindtap="restartQuiz" wx:if="{{answers.length > 0}}">重新开始本次测试</button>
+</view>

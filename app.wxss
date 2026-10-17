@@ -1,0 +1,101 @@
+page {
+  min-height: 100%;
+  background: #fbf7f0;
+  color: #2f3430;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 40rpx 32rpx 64rpx;
+  overflow-x: hidden;
+}
+
+.muted {
+  color: #7f877f;
+}
+
+.soft-card {
+  box-sizing: border-box;
+  max-width: 100%;
+  border: 1rpx solid rgba(92, 116, 96, 0.14);
+  border-radius: 28rpx;
+  background: rgba(255, 252, 246, 0.86);
+  box-shadow: 0 18rpx 48rpx rgba(86, 74, 54, 0.08);
+}
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 96rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.primary-btn {
+  color: #fff;
+  background: #6f8f74;
+  box-shadow: 0 16rpx 32rpx rgba(111, 143, 116, 0.22);
+}
+
+.secondary-btn {
+  color: #5f7d66;
+  background: #edf4ec;
+}
+
+.ghost-btn {
+  color: #7a665d;
+  background: transparent;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+}
+
+button::after {
+  border: none;
+}
+
+.safe-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.safe-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx;
+}
+
+.stack-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.safe-modal {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+.safe-text {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

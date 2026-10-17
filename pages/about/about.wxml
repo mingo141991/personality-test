@@ -1,0 +1,17 @@
+<view class="page about-page">
+  <view class="about-hero soft-card">
+    <view class="about-brand">人格小测</view>
+    <view class="about-title">温柔地认识自己</view>
+    <view class="about-text">这里的每一份结果，都只是帮助你靠近自己一点点，而不是替你下结论。</view>
+  </view>
+
+  <view class="section soft-card" wx:for="{{sections}}" wx:key="title">
+    <view class="section-title">{{item.title}}</view>
+    <view class="section-text">{{item.text}}</view>
+  </view>
+
+  <view class="notice-card soft-card">
+    <view class="section-title">重要提醒</view>
+    <view class="notice-line" wx:for="{{notices}}" wx:key="*this">{{item}}</view>
+  </view>
+</view>

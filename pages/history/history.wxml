@@ -1,0 +1,50 @@
+<view class="page history-page">
+  <view wx:if="{{history.length > 0}}" class="history-head">
+    <view>
+      <view class="history-title">本机历史记录</view>
+      <view class="history-subtitle">最多保留最近 20 次结果，方便你随时回看。</view>
+    </view>
+    <button class="clear-btn" bindtap="clearHistory">清空</button>
+  </view>
+
+  <scroll-view wx:if="{{filterTabs.length > 1}}" class="filter-scroll" scroll-x enable-flex>
+    <view class="filter-row">
+      <button
+        wx:for="{{filterTabs}}"
+        wx:key="id"
+        class="filter-chip {{item.active ? 'filter-chip-active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="changeFilter"
+      >
+        <text>{{item.label}}</text>
+        <text class="filter-count">{{item.count}}</text>
+      </button>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{history.length > 0}}" class="history-list">
+    <view
+      class="history-card soft-card"
+      wx:for="{{visibleHistory}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="openRecord"
+    >
+      <view class="history-main">
+        <view>
+          <view class="history-test">{{item.testTitle}}</view>
+          <view class="history-type">{{item.resultTitle}}</view>
+          <view class="history-time">{{item.savedTimeText}}</view>
+        </view>
+        <view class="history-status">{{item.resultStatus}}</view>
+      </view>
+      <view class="history-summary">{{item.resultSummary}}</view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-card soft-card">
+    <view class="empty-title">还没有历史记录</view>
+    <view class="empty-text">完成一次测试后，结果会保存在这里。</view>
+    <button class="primary-btn" bindtap="goQuiz">开始测试</button>
+  </view>
+</view>

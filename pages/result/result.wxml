@@ -1,0 +1,288 @@
+<view class="page result-page" wx:if="{{result}}">
+  <view wx:if="{{reportKind === 'generic'}}" class="result-card soft-card">
+    <view class="label">测试结果</view>
+    <view class="nickname">{{testTitle}}</view>
+    <view class="summary">这条记录已经保存，但当前版本暂未支持该测试类型的完整报告展示。</view>
+    <view class="visual-note">你可以先回到首页查看其他测试，或等待后续版本更新对应报告。</view>
+  </view>
+
+  <block wx:if="{{reportKind === 'mbti'}}">
+  <view class="result-card soft-card">
+    <view class="result-hero {{visual.theme}}">
+      <view class="result-copy">
+        <view class="label">你的倾向类型</view>
+        <view class="type">{{result.type}}</view>
+        <view class="nickname">{{profile.nickname}}</view>
+        <view class="role-pill">{{visual.roleCode}} · {{visual.roleName}}</view>
+      </view>
+      <view class="avatar-wrap">
+        <view class="avatar-aura"></view>
+        <view class="avatar-orbit"></view>
+        <view class="avatar-person avatar-{{result.type}}">
+          <view class="avatar-prop"></view>
+          <view class="avatar-cape"></view>
+          <view class="avatar-head">
+            <view class="avatar-hair"></view>
+            <view class="avatar-face">
+              <view class="avatar-eye"></view>
+              <view class="avatar-eye"></view>
+            </view>
+          </view>
+          <view class="avatar-body"></view>
+          <view class="avatar-collar"></view>
+          <view class="avatar-detail"></view>
+        </view>
+      </view>
+    </view>
+    <view class="archetype">{{visual.archetype}}</view>
+    <view class="summary">{{profile.summary}}</view>
+    <view class="visual-note">{{visual.visualNote}}</view>
+  </view>
+  </block>
+
+  <view wx:if="{{reportKind === 'stress'}}" class="result-card soft-card">
+    <view class="label">{{testTitle}}</view>
+    <view class="stress-score-row">
+      <view>
+        <view class="stress-score">{{stressPercent}}</view>
+        <view class="stress-unit">压力指数</view>
+      </view>
+      <view class="stress-level-pill">{{stressLevel}}</view>
+    </view>
+    <view class="stress-index-track">
+      <view class="stress-index-fill" style="width: {{stressPercent}}%;"></view>
+    </view>
+    <view class="nickname">{{stressLevel}}</view>
+    <view class="summary">{{stressSummary}}</view>
+    <view class="visual-note">这份结果用于帮助你温和觉察近期状态，不构成心理诊断；如果痛苦持续或影响正常生活，建议寻求专业支持。</view>
+  </view>
+
+  <view wx:if="{{reportKind === 'big-five'}}" class="result-card soft-card">
+    <view class="label">{{testTitle}}</view>
+    <view class="nickname">{{bigFiveTitle}}</view>
+    <view wx:if="{{bigFiveTopDimension}}" class="visual-note">相对突出的维度：{{bigFiveTopDimension.name}} · {{bigFiveTopDimension.percent}}%</view>
+    <view class="summary">{{bigFiveSummary}}</view>
+    <view class="visual-note">大五结果用于观察人格特质倾向，不代表能力高低，也不构成心理诊断。</view>
+  </view>
+
+  <view wx:if="{{reportKind === 'career'}}" class="result-card soft-card">
+    <view class="label">{{testTitle}}</view>
+    <view class="nickname">{{careerTitle}}</view>
+    <view wx:if="{{careerTopDimension}}" class="visual-note">
+      主要兴趣：{{careerTopDimension.name}} · {{careerTopDimension.percent}}%
+      <text wx:if="{{careerSecondDimension}}">；辅助线索：{{careerSecondDimension.name}}</text>
+    </view>
+    <view class="summary">{{careerSummary}}</view>
+    <view class="visual-note">职业兴趣结果用于帮助你选择探索起点，不代表固定职业选择，也不替代真实体验和职业咨询。</view>
+  </view>
+
+  <view wx:if="{{reportKind === 'stress' && result.unlockedFullResult}}" class="stress-report soft-card">
+    <view class="section-title">压力维度</view>
+    <view class="section-subtitle">分数越高，代表该维度在最近一周越需要被照顾。</view>
+    <view class="stress-item" wx:for="{{stressDimensions}}" wx:key="key">
+      <view class="stress-head">
+        <view class="report-copy safe-text">
+          <view class="stress-name">{{item.name}}</view>
+          <view class="stress-desc">{{item.percent >= 50 ? item.highText : item.lowText}}</view>
+        </view>
+        <view class="report-badge">{{item.level}} {{item.percent}}%</view>
+      </view>
+      <view class="bar-track stress-track">
+        <view class="bar-right" style="width: {{item.percent}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'stress' && result.unlockedFullResult}}" class="advice soft-card">
+    <view class="section-title">恢复建议</view>
+    <view class="section-subtitle">建议先从低成本、可持续的小调整开始，不需要一次把所有事情都做好。</view>
+    <view class="advice-grid stress-advice-grid">
+      <view class="advice-block stress-advice-block" wx:for="{{stressAdviceSections}}" wx:key="title">
+        <view class="advice-title">{{item.title}}</view>
+        <view class="advice-line" wx:for="{{item.items}}" wx:for-item="line" wx:key="*this">{{line}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'big-five' && result.unlockedFullResult}}" class="stress-report soft-card">
+    <view class="section-title">五维画像</view>
+    <view class="section-subtitle">分数越高，代表该维度在本次作答中越明显。</view>
+    <view class="stress-item" wx:for="{{bigFiveDimensions}}" wx:key="key">
+      <view class="stress-head">
+        <view class="report-copy safe-text">
+          <view class="stress-name">{{item.name}}</view>
+          <view class="stress-desc">{{item.text}}</view>
+        </view>
+        <view class="report-badge">{{item.level}} {{item.percent}}%</view>
+      </view>
+      <view class="bar-track stress-track">
+        <view class="bar-right" style="width: {{item.percent}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'big-five' && result.unlockedFullResult}}" class="advice soft-card">
+    <view class="section-title">理解建议</view>
+    <view class="section-subtitle">建议把五维结果当作自我观察入口，而不是固定标签。</view>
+    <view class="advice-grid stress-advice-grid">
+      <view class="advice-block stress-advice-block" wx:for="{{bigFiveAdviceSections}}" wx:key="title">
+        <view class="advice-title">{{item.title}}</view>
+        <view class="advice-line" wx:for="{{item.items}}" wx:for-item="line" wx:key="*this">{{line}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'career' && result.unlockedFullResult}}" class="stress-report soft-card">
+    <view class="section-title">兴趣维度</view>
+    <view class="section-subtitle">分数越高，代表该维度在本次作答中越明显。</view>
+    <view class="stress-item" wx:for="{{careerDimensions}}" wx:key="key">
+      <view class="stress-head">
+        <view class="report-copy safe-text">
+          <view class="stress-name">{{item.name}}</view>
+          <view class="stress-desc">{{item.text}}</view>
+        </view>
+        <view class="report-badge">{{item.level}} {{item.percent}}%</view>
+      </view>
+      <view class="bar-track stress-track">
+        <view class="bar-right" style="width: {{item.percent}}%; background: {{item.color}};"></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'career' && result.unlockedFullResult}}" class="advice soft-card">
+    <view class="section-title">探索建议</view>
+    <view class="section-subtitle">建议把结果当作选择体验方向的线索，而不是一次性决定未来。</view>
+    <view class="advice-grid stress-advice-grid">
+      <view class="advice-block stress-advice-block" wx:for="{{careerAdviceSections}}" wx:key="title">
+        <view class="advice-title">{{item.title}}</view>
+        <view class="advice-line" wx:for="{{item.items}}" wx:for-item="line" wx:key="*this">{{line}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'mbti' && result.unlockedFullResult}}" class="bars soft-card">
+    <view class="section-title">四维倾向</view>
+    <view class="section-subtitle">这四组偏好共同组成你的类型。比例越高，代表这一侧在本次作答里越常被你选择。</view>
+    <view class="bar-item" wx:for="{{result.bars}}" wx:key="key">
+      <view class="bar-label">
+        <text>{{item.left}}</text>
+        <text class="winner">{{item.winner}}</text>
+        <text>{{item.right}}</text>
+      </view>
+      <view class="bar-track">
+        <view class="bar-left" style="width: {{item.leftPercent}}%;"></view>
+        <view class="bar-right" style="width: {{item.rightPercent}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reportKind === 'mbti' && result.unlockedFullResult}}" class="dimension-report soft-card">
+    <view class="section-title">维度解读</view>
+    <view class="report-item" wx:for="{{dimensionReport}}" wx:key="key">
+      <view class="report-head">
+        <view class="report-copy safe-text">
+          <view class="report-title">{{item.title}}</view>
+          <view class="report-axis">{{item.leftName}} / {{item.rightName}}</view>
+        </view>
+        <view class="report-badge">{{item.strength}} {{item.winner}}</view>
+      </view>
+      <view class="report-text">{{item.insight}}</view>
+      <view class="meaning-grid safe-grid-2">
+        <view class="meaning-cell {{item.winner === item.left ? 'meaning-active' : ''}}">
+          <view class="meaning-name">{{item.leftName}}</view>
+          <view class="meaning-text">{{item.leftMeaning}}</view>
+        </view>
+        <view class="meaning-cell {{item.winner === item.right ? 'meaning-active' : ''}}">
+          <view class="meaning-name">{{item.rightName}}</view>
+          <view class="meaning-text">{{item.rightMeaning}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{isUnlockable}}" class="share-card soft-card">
+    <view class="section-title">分享结果</view>
+    <view class="section-subtitle">
+      {{result.unlockedFullResult || !unlockEnabled ? '可以把这份结果发给朋友，也可以生成一张适合保存的分享图。' : '未解锁前只分享基础结果；生成包含细节的分享图需要先解锁详细解析。'}}
+    </view>
+    <view class="share-actions stack-actions">
+      <button class="primary-btn share-btn" open-type="share">分享给朋友</button>
+      <button wx:if="{{result.unlockedFullResult || !unlockEnabled}}" class="secondary-btn share-btn" bindtap="generatePoster" loading="{{posterGenerating}}">
+        {{posterGenerating ? '生成中' : '生成分享图'}}
+      </button>
+      <button wx:else class="secondary-btn share-btn" bindtap="openUnlockModal">解锁后生成分享图</button>
+    </view>
+  </view>
+
+  <view wx:if="{{isUnlockable && unlockEnabled && !result.unlockedFullResult}}" class="unlock soft-card">
+    <view class="section-title">详细解析</view>
+    <view class="unlock-text">观看一段短视频后，解锁维度报告、理解建议和更完整的自我观察线索。</view>
+    <button class="primary-btn" bindtap="openUnlockModal">解锁详细解析</button>
+  </view>
+
+  <view wx:if="{{reportKind === 'mbti' && result.unlockedFullResult}}" class="full-result">
+    <view class="advice soft-card">
+      <view class="section-title">个性化建议</view>
+      <view class="section-subtitle">以下建议更适合用于自我管理、学习工作和沟通协作，不作为职业筛选或心理诊断依据。</view>
+      <view class="advice-grid safe-grid-2">
+        <view class="advice-block" wx:for="{{adviceSections}}" wx:key="title">
+          <view class="advice-title">{{item.title}}</view>
+          <view class="advice-line" wx:for="{{item.items}}" wx:for-item="line" wx:key="*this">{{line}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail soft-card" wx:for="{{details}}" wx:key="title">
+      <view class="section-title">{{item.title}}</view>
+      <view class="detail-line" wx:for="{{item.items}}" wx:for-item="line" wx:key="*this">{{line}}</view>
+    </view>
+  </view>
+
+  <view class="next-card soft-card">
+    <view class="section-title">接下来可以</view>
+    <view class="section-subtitle">把这份结果先放一放，换个角度继续了解自己，或回到历史记录慢慢对照。</view>
+    <view class="result-actions stack-actions">
+      <button class="secondary-btn result-action-btn" bindtap="restart">再测一个</button>
+      <button class="secondary-btn result-action-btn" bindtap="goHistory">查看历史</button>
+      <button class="ghost-btn result-action-btn" bindtap="goHome">回到首页</button>
+    </view>
+  </view>
+
+  <view wx:if="{{showUnlockModal}}" class="modal-mask">
+    <view class="modal soft-card safe-modal">
+      <view class="modal-title">解锁完整解析</view>
+      <view class="modal-text">
+        {{mockWatching ? '正在模拟观看短视频，稍等一下就好。' : (unlockMode === 'real' ? '完整观看激励视频后，解锁你的完整人格解析。' : '当前为开发模拟模式，完成短暂倒计时后解锁完整解析。')}}
+      </view>
+      <view wx:if="{{mockWatching}}" class="countdown">{{countdown}}s</view>
+      <view wx:else class="modal-actions">
+        <button class="primary-btn" bindtap="startUnlockAd" loading="{{unlockLoading}}">
+          {{unlockMode === 'real' ? '观看视频' : '模拟观看'}}
+        </button>
+        <button class="ghost-btn" bindtap="closeUnlockModal">暂不解锁</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{posterPath}}" class="modal-mask">
+    <view class="poster-modal soft-card safe-modal">
+      <view class="modal-title">分享图已生成</view>
+      <image class="poster-preview" src="{{posterPath}}" mode="aspectFit" bindtap="previewPoster"></image>
+      <view class="poster-actions stack-actions">
+        <button class="primary-btn" bindtap="savePoster">保存到相册</button>
+        <button class="secondary-btn" bindtap="previewPoster">预览大图</button>
+      </view>
+      <button class="ghost-btn" bindtap="closePoster">关闭</button>
+    </view>
+  </view>
+
+  <canvas class="poster-canvas" canvas-id="resultPoster"></canvas>
+</view>
+
+<view class="page empty-page" wx:else>
+  <view class="soft-card empty-card">
+    <view class="section-title">还没有测试结果</view>
+    <view class="empty-text">先完成一轮测试，再来看属于你的解析。</view>
+    <button class="primary-btn" bindtap="restart">开始测试</button>
+  </view>
+</view>

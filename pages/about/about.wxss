@@ -1,0 +1,71 @@
+.about-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.about-hero {
+  padding: 36rpx 32rpx;
+}
+
+.about-brand {
+  color: #c68873;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.about-title {
+  margin-top: 18rpx;
+  color: #2f3430;
+  font-size: 42rpx;
+  font-weight: 900;
+}
+
+.about-text {
+  margin-top: 16rpx;
+  color: #667066;
+  font-size: 28rpx;
+  line-height: 1.7;
+}
+
+.section {
+  padding: 30rpx;
+}
+
+.section-title {
+  color: #5f7d66;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.section-text {
+  margin-top: 16rpx;
+  color: #606860;
+  font-size: 28rpx;
+  line-height: 1.75;
+}
+
+.notice-card {
+  padding: 30rpx;
+  background: rgba(255, 252, 246, 0.92);
+}
+
+.notice-line {
+  position: relative;
+  margin-top: 18rpx;
+  padding-left: 26rpx;
+  color: #7a665d;
+  font-size: 27rpx;
+  line-height: 1.75;
+}
+
+.notice-line::before {
+  content: "";
+  position: absolute;
+  top: 22rpx;
+  left: 0;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 999rpx;
+  background: #c68873;
+}

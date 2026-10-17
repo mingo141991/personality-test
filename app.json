@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/quiz/quiz",
+    "pages/result/result",
+    "pages/history/history",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarTitleText": "人格小测",
+    "navigationBarBackgroundColor": "#fbf7f0",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fbf7f0"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
