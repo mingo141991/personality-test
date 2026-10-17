@@ -1,0 +1,11 @@
+# 统一按文本处理，避免 Windows 换行符差异导致整文件 diff
+* text=auto
+
+# 二进制资源
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ttf binary
+*.mp3 binary

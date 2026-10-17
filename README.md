@@ -41,6 +41,13 @@ D:\mingo\小程序开发\personality-miniapp
 
 4. AppID 可先选择测试号或使用游客模式。
 
+## 版本控制与基线
+
+- 本目录是一个独立的 git 仓库（分支 `main`），首次提交为“建立版本控制基线（QA 12/12 通过）”。
+- 该提交就是**已知可用基线**：`node qa\functional-test.js` 12 项全部通过时的完整状态。
+- 改坏了用 `git restore .`（未提交）或 `git reset --hard <提交号>`（已提交）回到基线；看改动差异用 `git diff`。
+- `project.private.config.json`（开发者工具本地私有配置）已列入 `.gitignore`，不进版本库。
+
 ## 后续接入方向
 
 - 后续拿到流量主后，可在 `config/ad.js` 中开启 `rewardedVideo.enabled` 并填写 `adUnitId`，再恢复激励视频解锁流程。
