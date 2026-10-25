@@ -107,6 +107,8 @@
 - 已建立发布前功能测试细则、自动化回归脚本和测试报告：`qa/functional-test-plan.md`、`qa/functional-test.js`、`qa/test-report.md`；常规回归命令为 `node qa\functional-test.js`。
 - 分享图底部已统一为安全区：小程序码/占位码在左侧，免责声明在右侧换行，不再与图像或维度条重叠；真实小程序码通过 `config/poster.js` 配置。
 - 四类分享图的维度条排版已统一为“文字在上、条带紧跟其下、下一项留出更清楚间隔”；避免条带看起来归属于下一项文字。`qa/functional-test.js` 已加入相关间距常量回归。
+- 大五、压力、职业三类分享图已经由「几何符号」升级为「实际人物画像」：复用 MBTI 分享图的 `drawPosterAvatar` 画法（发型+道具+配色），在 `getPosterAvatarConfig` 里新增 15 种映射——大五按突出维度 5 种、职业按主导兴趣维度 6 种、压力按 stressPercent 四档 4 种；`qa/functional-test.js` 已加 `poster avatar type mapping` 回归。
+- 结果页 ISTP 的道具（锤子）曾用负值定位导致整体飘位，已重画为正形容器+容器内正值定位，与同组 ISFP/ESTP/ESFP 的道具容器对齐。
 
 ## MBTI 人物画像现状
 

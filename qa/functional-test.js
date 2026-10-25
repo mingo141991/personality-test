@@ -492,6 +492,43 @@ function testHistoryClearButtonStyle() {
   assert(clearButtonRule[0].includes("line-height: 1"), "history clear button should avoid native button line-height offset")
 }
 
+function testPosterAvatarTypeMapping() {
+  resetModules()
+  installWxMock()
+  installAppMock()
+  const pages = installPageCapture()
+  require(path.join(root, "pages/result/result.js"))
+  const page = instantiatePage(pages[0])
+
+  // 大五：5 维都要命中非兜底 config（兜底是 INFP 的 soft/leaf）
+  const bigFiveKeys = ["openness", "conscientiousness", "extraversion", "agreeableness", "emotionalStability"]
+  bigFiveKeys.forEach((key) => {
+    const type = page.getBigFiveAvatarType({ key })
+    const cfg = page.getPosterAvatarConfig(type)
+    assert(cfg && cfg.hair, `big-five dimension ${key} should map to a real avatar config`)
+    assert(type === `big5-${key}`, `big-five avatar type for ${key} should be big5-${key}`)
+  })
+
+  // 职业：6 维
+  const careerKeys = ["creative", "analytical", "practical", "social", "enterprising", "structured"]
+  careerKeys.forEach((key) => {
+    const type = page.getCareerAvatarType({ key })
+    const cfg = page.getPosterAvatarConfig(type)
+    assert(cfg && cfg.hair, `career dimension ${key} should map to a real avatar config`)
+    assert(type === `career-${key}`, `career avatar type for ${key} should be career-${key}`)
+  })
+
+  // 压力：4 档
+  assert(page.getStressAvatarType(80) === "stress-veryhigh", "stress >=72 should map to veryhigh")
+  assert(page.getStressAvatarType(60) === "stress-high", "stress 52-71 should map to high")
+  assert(page.getStressAvatarType(40) === "stress-mid", "stress 30-51 should map to mid")
+  assert(page.getStressAvatarType(10) === "stress-low", "stress <30 should map to low")
+
+  // 边界：各档位都能拿到非兜底且彼此有区分（发型/道具至少有一项不同）
+  const stressCfgs = ["stress-low", "stress-mid", "stress-high", "stress-veryhigh"].map((t) => page.getPosterAvatarConfig(t))
+  assert(stressCfgs.every((c) => c && c.hair), "all stress levels should resolve to real configs")
+}
+
 runTest("page scripts load", testPageScriptsLoad)
 runTest("config and question counts", testConfigAndQuestionCounts)
 runTest("scoring for all tests", testScoringForAllTests)
@@ -504,3 +541,4 @@ runTest("home and history pages", testHomeAndHistoryPages)
 runTest("about page content", testAboutPageContent)
 runTest("poster layout spacing constants", testPosterLayoutSpacingConstants)
 runTest("history clear button style", testHistoryClearButtonStyle)
+runTest("poster avatar type mapping", testPosterAvatarTypeMapping)

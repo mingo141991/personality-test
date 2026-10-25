@@ -706,32 +706,29 @@
 }
 
 .avatar-ISTP .avatar-prop {
-  right: 2rpx;
-  top: 54rpx;
+  right: 0;
+  top: 40rpx;
   width: 64rpx;
-  height: 22rpx;
-  border-radius: 999rpx;
-  background: #9b7440;
-  transform: rotate(-32deg);
+  height: 66rpx;
 }
 
 .avatar-ISTP .avatar-prop::before {
-  right: -8rpx;
-  top: -12rpx;
-  width: 28rpx;
-  height: 46rpx;
-  border-radius: 8rpx;
+  left: 24rpx;
+  top: 2rpx;
+  width: 46rpx;
+  height: 22rpx;
+  border-radius: 6rpx;
   background: #c99a58;
 }
 
 .avatar-ISTP .avatar-prop::after {
-  left: -8rpx;
-  top: -10rpx;
-  width: 24rpx;
+  left: 40rpx;
+  top: 20rpx;
+  width: 14rpx;
   height: 42rpx;
   border-radius: 999rpx;
-  border: 5rpx solid #9b7440;
-  background: transparent;
+  background: #9b7440;
+  transform: rotate(-18deg);
 }
 
 .avatar-ISFP .avatar-hair {

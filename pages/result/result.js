@@ -364,7 +364,7 @@ Page({
     ctx.setFontSize(22)
     ctx.fillText(stressLevel, 48, 158)
 
-    this.drawStressPosterSymbol(ctx, 260, 70, theme)
+    this.drawPosterAvatar(ctx, 224, 36, theme, this.getStressAvatarType(stressPercent))
 
     ctx.setFillStyle("#667066")
     ctx.setFontSize(14)
@@ -418,9 +418,7 @@ Page({
     const topText = bigFiveTopDimension ? `突出维度：${bigFiveTopDimension.name} ${bigFiveTopDimension.percent}%` : "五维特质倾向"
     ctx.fillText(topText, 48, 142)
 
-    this.drawRoundRect(ctx, 270, 72, 42, 82, 20, theme.main)
-    this.drawRoundRect(ctx, 250, 96, 42, 58, 20, "#6f9a7b")
-    this.drawRoundRect(ctx, 290, 108, 42, 46, 20, "#c99a58")
+    this.drawPosterAvatar(ctx, 224, 36, theme, this.getBigFiveAvatarType(bigFiveTopDimension))
 
     ctx.setFillStyle("#667066")
     ctx.setFontSize(14)
@@ -474,7 +472,7 @@ Page({
     const secondText = careerSecondDimension ? `辅助线索：${careerSecondDimension.name}` : "兴趣方向观察"
     ctx.fillText(secondText, 48, 142)
 
-    this.drawCareerPosterSymbol(ctx, 258, 72, theme)
+    this.drawPosterAvatar(ctx, 224, 36, theme, this.getCareerAvatarType(careerTopDimension))
 
     ctx.setFillStyle("#667066")
     ctx.setFontSize(14)
@@ -635,9 +633,49 @@ Page({
       ISTP: { hair: "short", prop: "tool", accent: "#f1dfbf" },
       ISFP: { hair: "soft", prop: "brush", accent: "#f1dfbf" },
       ESTP: { hair: "short", prop: "bolt", accent: "#f1dfbf", cape: true },
-      ESFP: { hair: "wave", prop: "spark", accent: "#f1dfbf" }
+      ESFP: { hair: "wave", prop: "spark", accent: "#f1dfbf" },
+
+      // 大五（按突出维度）
+      "big5-openness": { hair: "wave", prop: "orbit", accent: "#d7e8f0" },
+      "big5-conscientiousness": { hair: "neat", prop: "book", accent: "#e6e2d8" },
+      "big5-extraversion": { hair: "crest", prop: "spark", accent: "#f4e3c8" },
+      "big5-agreeableness": { hair: "veil", prop: "leaf", accent: "#dcecd8" },
+      "big5-emotionalStability": { hair: "sharp", prop: "shield", accent: "#e8e4f0" },
+
+      // 职业（6 维 RIASEC 风格）
+      "career-creative": { hair: "wave", prop: "brush", accent: "#f4e0d8", cape: true },
+      "career-analytical": { hair: "soft", prop: "lens", accent: "#e4e0f0" },
+      "career-practical": { hair: "short", prop: "tool", accent: "#f1dfbf" },
+      "career-social": { hair: "veil", prop: "leaf", accent: "#dcecd8", cape: true },
+      "career-enterprising": { hair: "crest", prop: "flag", accent: "#f6e4d3", cape: true },
+      "career-structured": { hair: "neat", prop: "shield", accent: "#dce8f0" },
+
+      // 压力（4 档）
+      "stress-low": { hair: "soft", prop: "leaf", accent: "#e0f0e0" },
+      "stress-mid": { hair: "short", prop: "moon", accent: "#e0e8f0" },
+      "stress-high": { hair: "messy", prop: "torch", accent: "#f6e4d3" },
+      "stress-veryhigh": { hair: "sharp", prop: "bolt", accent: "#f4dcd4", cape: true }
     }
     return configs[type] || configs.INFP
+  },
+
+  // 把「维度 key」转成 getPosterAvatarConfig 认识的 type 字符串
+  getBigFiveAvatarType(dimension) {
+    const key = dimension && dimension.key ? dimension.key : ""
+    return `big5-${key}`
+  },
+
+  getCareerAvatarType(dimension) {
+    const key = dimension && dimension.key ? dimension.key : ""
+    return `career-${key}`
+  },
+
+  getStressAvatarType(percent) {
+    const p = Number(percent) || 0
+    if (p >= 72) return "stress-veryhigh"
+    if (p >= 52) return "stress-high"
+    if (p >= 30) return "stress-mid"
+    return "stress-low"
   },
 
   drawPosterAvatarAura(ctx, x, y, theme, config) {
