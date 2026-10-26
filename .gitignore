@@ -5,6 +5,9 @@ miniprogram_npm/
 # 微信开发者工具的本地私有配置（每次打开可能被改写，含个人 appid/编译设置）
 project.private.config.json
 
+# 内部开发记录（不对外公开）
+docs/开发记录-README.md
+
 # 系统与编辑器
 .DS_Store
 Thumbs.db
