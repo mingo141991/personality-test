@@ -7,6 +7,7 @@ project.private.config.json
 
 # 内部开发记录（不对外公开）
 docs/开发记录-README.md
+AGENT.md
 
 # 系统与编辑器
 .DS_Store

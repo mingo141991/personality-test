@@ -78,4 +78,4 @@ node qa/functional-test.js
 
 ## 许可证
 
-（待定 —— 若你希望开源，可在此声明 MIT 等协议；亦可保留版权声明。）
+[MIT](./LICENSE) © 2026 mingo141991
